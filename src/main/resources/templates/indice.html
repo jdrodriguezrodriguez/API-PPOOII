@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Pagina Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #632432;
+                text-align: center;
+            }
+
+            h1 {
+                background-color: white;
+                color: black;
+                padding: 20px;
+                margin: 0;
+                border-bottom: solid 5px black;
+            }
+
+            a {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 20px;
+                background-color: darkblue;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+
+            a:hover {
+                background-color: #0056b3;
+            }
+
+            table {
+                margin: 20px auto;
+                width: 60%;
+                border-collapse: collapse;
+            }
+            table{
+                background-color: white;
+                text-align: left;
+                border-collapse: collapse;
+                width: 80%;
+            }
+            thead{
+                background-color: #246355;
+                border-bottom: solid 5px #0F362D;
+                color: white;
+            }
+
+            th, td {
+                padding: 20px;
+                text-align: center;
+            }
+
+            th {
+                color: white;
+            }
+
+            td {
+                background-color: #fff;
+            }
+
+            tr:nth-child(even){
+                background-color: #ddd;
+            }
+
+            tr:hover td{
+                background-color: #369681;
+                color: white;
+            }
+
+            .btn {
+                border: none;
+                color: white;
+                padding: 14px 28px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .btn i {
+                margin-right: 5px;
+            }
+
+            .warning {
+                background-color: #ff9800;
+            }
+            .warning:hover {
+                background: #e68a00;
+            }
+
+            .no-info {
+                color: #d9534f;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+        </style>    
+    </head>
+    <body>
+        <h1>CRUD</h1>
+
+        <a th:href="@{/agregar}">Agregar personas</a>
+        <br/>
+        <br/>
+        <div th:if="${personas != null and !personas.empty}" id="main-container">
+            <!-- DATOS PERSONALES -->
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Identificacion</th>
+                        <th>Ubicacion</th>
+                        <th>Edad clinica</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tr th:each="persona : ${personas}">
+                    <td th:text="${persona.pnombre}">Muestra nombre</td>
+                    <td th:text="${persona.identificacion}">Muestra identificacion</td>
+                    <td th:text="${persona.ubicacion}">Muestra edad</td>
+                    <td th:text="${persona.edadclinica}">edad clinica</td>
+                    <td><a th:href="@{/cambiar/} + ${persona.id}" th:text="Editar"></a></td>
+                    <td><a th:href="@{/borrar/} + ${persona.id}" th:text="Eliminar"></a></td>
+                </tr>
+            </table>
+            <!-- DATOS USUARIO -->
+            <button onclick="toggleTable()" class="btn warning"><i class="fas fa-exclamation-triangle"></i>Ver registros</button>
+            
+            <table id="tablaUsuarios" border="2" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>USUARIO</th>
+                        <th>CONTRASEÑA</th>
+                        <th>APIKEY</th>
+                        <!--<th>Latitud</th>
+                        <th>Longitud</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="persona : ${personas}">
+                        <td th:text="${persona.usuario.login}">Muestra nombre</td>
+                        <td th:text="${persona.usuario.password}">Muestra contraseña</td>
+                        <td th:text="${persona.usuario.apikey}">Muestra apikey</td>
+                        <!--<td th:text="${persona.coordenadas.latitud}">latitud</td>
+                        <td th:text="${persona.coordenadas.longitud}">longitud</td>-->
+                    </tr>   
+                </tbody>
+            </table>
+            <script>
+                function toggleTable() {
+                    const table = document.getElementById("tablaUsuarios");
+                    table.style.display = (table.style.display === "none") ? "table" : "none";
+                }
+            </script>
+        </div>
+        <div th:if="${personas == null or personas.empty}">
+            La lista no tiene informacion
+        </div>
+    </body>
+</html>

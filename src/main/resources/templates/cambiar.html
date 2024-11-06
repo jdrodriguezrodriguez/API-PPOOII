@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="https://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Formulario de Persona</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+
+            h1 {
+                background-color: #632432;
+                color: white;
+                padding: 20px;
+                margin: 0;
+            }
+
+            form {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .form-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+                gap: 20px;
+            }
+
+            .form-container label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .form-container input {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .form-container span {
+                color: red;
+                font-size: 0.9em;
+            }
+
+            input[type="submit"] {
+                grid-column: 1 / -1; /* Ocupa ambas columnas */
+                width: 150px;
+                margin: 0 auto;
+                padding: 10px;
+                background-color: #632432;
+                color: white;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #632432a1;
+            }
+
+            a {
+                display: inline-block;
+                margin: 20px 44rem 0 0;
+                padding: 10px 20px;
+                background-color: darkblue;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+
+            a:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Datos de la Persona</h1>
+        <br/>
+        <form th:action="@{/salvar}" method="post" th:object="${persona}">
+            <input type="hidden" name="id" th:field="*{id}">
+            <br/>
+            <div class="form-container">
+                <!--PRIMER NOMBRE-->
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="name" th:field="*{pnombre}"/>
+                    <span th:if="${#fields.hasErrors('pnombre')}" th:errors="*{pnombre}">No debe estar vació</span>
+                </div>
+                <!--SEGUNDO NOMBRE
+                <div>
+                    <label for="nombre">Segundo nombre: </label>
+                    <input type="text" name="name" th:field="*{snombre}"/>
+                    <span th:if="${#fields.hasErrors('snombre')}" th:errors="*{snombre}">No debe estar vació</span>
+                </div>-->
+                <!--PRIMER APELLIDO-->
+                <div>
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="lastname" th:field="*{papellido}"/>
+                    <span th:if="${#fields.hasErrors('papellido')}" th:errors="*{papellido}">No debe estar vació</span>
+                </div>
+                <!--SEGUNDO APELLIDO
+                <div>
+                    <label for="apellido">Segundo apellido: </label>
+                    <input type="text" name="lastname" th:field="*{sapellido}"/>
+                    <span th:if="${#fields.hasErrors('sapellido')}" th:errors="*{sapellido}">No debe estar vació</span>
+                </div>-->
+                <!--IDENTIFICACION-->
+                <div>
+                    <label for="identificacion">Numero de identificacion:</label>
+                    <input type="number" name="id" th:field="*{identificacion}"/>
+                    <span th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}">No debe estar vació</span>
+                </div>
+                <!--CORREO-->
+                <div>
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" name="email" th:field="*{correo}"/>
+                    <span th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">No debe estar vació</span>
+                </div>
+                <!-- FECHA DE NACIMIENTO -->
+                <div>
+                    <label for="fechanacimiento">Fecha de nacimiento</label>
+                    <input type="date" name="fechanacimiento" th:field="*{fechanacimiento}" required />
+                    <span th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">No debe estar vacía</span>
+                </div>
+                <!-- FECHA DE NACIMIENTO -->
+                <div>
+                    <label for="ubicacion">Ubicación</label>
+                    <input type="text" name="ubicacion" th:field="*{ubicacion}" required />
+                    <span th:if="${#fields.hasErrors('ubicacion')}" th:errors="*{ubicacion}">No debe estar vacía</span>
+                </div><br/>
+                <!-- DATOS DEL USUARIO -->
+                <!--EDAD
+                <div>
+                    <label for="edad">Edad: </label>
+                    <input type="number" name="edad" th:field="*{edad}"/>
+                    <span th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}">No debe estar vació</span>
+                </div>-->
+                <!--EDAD CLINICA
+                <div>
+                    <label for="edadclinica">Edad clínica: </label>
+                    <input type="number" name="edadclinica" th:field="*{edadclinica}"/>
+                    <span th:if="${#fields.hasErrors('edadclinica')}" th:errors="*{edadclinica}">No debe estar vació</span>
+                </div>-->
+                <!-- BOTÓN SUBMIT -->
+                <input type="submit" name="salvar" value="GUARDAR"/>
+            </div>
+            <hr/><br/>
+            <!-- comment <div class="form-container"> 
+                <div>
+                    <label for="login">Usuario:</label>
+                    <input type="text" name="login" th:field="*{usuario.login}" readonly/>
+                </div>
+                <div>
+                    <label for="password">Cambiar contraseña</label>
+                    <input type="text" name="password" th:field="*{usuario.password}"/>
+                </div>
+            </div>-->
+        </form>
+        <br/>
+        <a th:href="@{/inicio}">Regresar</a>
+    </body>
+</html>
